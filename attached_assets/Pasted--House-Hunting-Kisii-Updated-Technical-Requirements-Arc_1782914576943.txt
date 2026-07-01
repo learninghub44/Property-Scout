@@ -1,0 +1,149 @@
+# House Hunting Kisii - Updated Technical Requirements
+
+## Architecture
+
+The application will be built as a single full-stack application using Next.js 15 (App Router). There will be no separate frontend and backend projects. All frontend, server logic, API routes, database access, and authentication will live within the same codebase.
+
+---
+
+## Technology Stack
+
+### Framework
+
+* Next.js 15 (App Router)
+* React
+* TypeScript
+
+### Styling
+
+* Tailwind CSS
+* Shadcn UI
+* Framer Motion
+* DM Sans Font
+
+### Database
+
+* Neon PostgreSQL
+* Prisma ORM
+
+### Image Storage
+
+* Cloudinary
+
+### AI
+
+* Groq API for AI-powered moderation
+
+### Authentication
+
+* Email and Password
+* Google Authentication
+
+### Email
+
+Email notifications only.
+
+No SMS integration.
+
+---
+
+## Hosting
+
+The entire application will be deployed as one full-stack project on Cloudflare.
+
+Services
+
+* Cloudflare Pages
+* Cloudflare Workers
+* Cloudflare CDN
+* Cloudflare DNS
+* Cloudflare Analytics (optional server monitoring if needed)
+
+There will be no separate backend server or API deployment.
+
+---
+
+## Analytics
+
+Google Analytics will be used for website traffic and user behavior tracking.
+
+Track events such as
+
+* Property views
+* Search activity
+* Viewing requests
+* Listing creation
+* User registrations
+* Contact button clicks
+* Popular locations
+* Device usage
+* Traffic sources
+
+---
+
+## Property Contact Information
+
+For properties listed for sale, the seller's contact information will be publicly displayed on the property page.
+
+Displayed information includes
+
+* Full Name
+* Phone Number
+* Email Address
+* WhatsApp Number (if provided)
+
+This allows interested buyers to contact the seller directly without intermediary messaging.
+
+For rental listings, landlords may also choose to display the same contact details publicly.
+
+---
+
+## KYC Verification
+
+KYC is mandatory for
+
+* Individual landlords
+* Property companies
+
+Only verified users can publish listings.
+
+Verification includes
+
+* National ID or Passport
+* Selfie verification
+* Email verification
+* Residential address
+
+Verification status
+
+* Pending
+* Approved
+* Rejected
+* Suspended
+
+---
+
+## Development Principles
+
+* Single Next.js full-stack application
+* No separate frontend repository
+* No separate backend repository
+* No mock data
+* No placeholder statistics
+* No dummy charts
+* No fake users
+* No fake listings
+* Production-ready code only
+* All data stored in Neon PostgreSQL
+* All property images stored in Cloudinary
+* Strong TypeScript typing
+* Reusable components
+* Modular architecture
+* Responsive design
+* Mobile-first development
+* SEO optimized
+* Accessibility compliant
+* Clean and maintainable codebase
+* Optimized performance
+* Secure authentication
+* AI-assisted moderation using Groq

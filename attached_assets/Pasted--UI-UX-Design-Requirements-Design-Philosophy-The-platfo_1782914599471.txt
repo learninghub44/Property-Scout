@@ -1,0 +1,303 @@
+# UI/UX Design Requirements
+
+## Design Philosophy
+
+The platform must feel like a premium, modern real estate marketplace inspired by Airbnb's design philosophy while maintaining its own unique identity. It must not imitate Airbnb directly, but should adopt the same principles of simplicity, usability, visual hierarchy, and polished interactions.
+
+The interface should look handcrafted by an experienced product design team rather than appearing AI-generated or based on generic templates.
+
+## Overall Experience
+
+The application should feel:
+
+* Modern
+* Elegant
+* Premium
+* Professional
+* Trustworthy
+* Fast
+* Spacious
+* Minimal without being empty
+* Visually balanced
+* Consistent across all pages
+
+Every page should have a clear purpose and intuitive navigation with no clutter.
+
+---
+
+# Visual Identity
+
+Use a clean, contemporary design language with:
+
+* Large, high-quality property images
+* Rounded corners (consistent radius throughout)
+* Soft shadows
+* Subtle borders
+* Generous whitespace
+* Smooth transitions
+* Clear typography hierarchy
+* Consistent spacing using an 8px grid system
+
+Avoid visual noise and excessive decoration.
+
+---
+
+# Typography
+
+Primary font:
+
+* DM Sans
+
+Typography should feature:
+
+* Clear heading hierarchy
+* Comfortable line spacing
+* Readable body text
+* Large section headings
+* Consistent font weights
+* Excellent readability on desktop, tablet, and mobile
+
+---
+
+# Color System
+
+Use a refined, modern palette with semantic colors for:
+
+* Primary actions
+* Secondary actions
+* Success
+* Warning
+* Error
+* Information
+
+Ensure sufficient contrast for accessibility and avoid overly saturated colors.
+
+---
+
+# Homepage
+
+The homepage should immediately communicate trust and quality.
+
+Include:
+
+* Prominent search bar
+* Featured properties
+* Recently added listings
+* Popular locations in Kisii
+* Property categories
+* Why choose the platform
+* Verified landlord highlights
+* Customer testimonials
+* Clear calls to action
+
+The layout should guide users naturally from discovery to property exploration.
+
+---
+
+# Property Cards
+
+Property cards should be information-rich while remaining clean and uncluttered.
+
+Display:
+
+* Large optimized image
+* Property title
+* Price
+* Location
+* Number of bedrooms
+* Number of bathrooms
+* Property type
+* Verification badge (if applicable)
+* Favorite button
+* Featured badge (if applicable)
+
+Hover interactions should feel smooth and responsive without being distracting.
+
+---
+
+# Property Details Page
+
+The property page should prioritize imagery and essential information.
+
+Include:
+
+* Large image gallery
+* Sticky summary panel
+* Property overview
+* Amenities
+* Map
+* Seller or landlord profile
+* Public contact information (for sale listings)
+* Viewing request form
+* Similar properties
+* Safety tips for buyers and tenants
+
+The page should encourage user confidence and action.
+
+---
+
+# Search Experience
+
+The search experience should be central to the platform.
+
+Features:
+
+* Instant search feedback
+* Advanced filters
+* Sorting options
+* Responsive filter drawer on mobile
+* Search result count
+* Grid and list views
+* Clear empty states
+* Search history (for logged-in users)
+
+---
+
+# Forms
+
+Forms should be simple and approachable.
+
+Requirements:
+
+* Logical grouping of fields
+* Inline validation
+* Helpful error messages
+* Progress indicators for long forms
+* Auto-save where appropriate
+* Clear success confirmations
+
+---
+
+# Dashboard
+
+Dashboards should focus on usability and clarity.
+
+Requirements:
+
+* Clean navigation
+* Responsive sidebar
+* Summary cards
+* Data tables
+* Search and filtering
+* Bulk actions
+* Activity timeline
+* Empty states
+* Loading states
+* Confirmation dialogs for destructive actions
+
+All dashboard data must come from the live database.
+
+---
+
+# Navigation
+
+The navigation should be intuitive and consistent.
+
+Desktop:
+
+* Sticky top navigation
+* Mega menu for categories if needed
+* Clear primary actions
+* User account menu
+
+Mobile:
+
+* Bottom navigation for key actions
+* Slide-out menu
+* Thumb-friendly interactions
+* Optimized touch targets
+
+---
+
+# Micro-Interactions
+
+Include subtle animations that enhance usability without slowing the interface.
+
+Examples:
+
+* Button hover effects
+* Card hover elevation
+* Smooth page transitions
+* Skeleton loaders
+* Fade-in content
+* Image loading effects
+* Toast notifications
+* Smooth modal animations
+
+Avoid flashy or excessive animations.
+
+---
+
+# Responsive Design
+
+The platform must provide an excellent experience across:
+
+* Mobile phones
+* Tablets
+* Laptops
+* Desktop monitors
+* Ultra-wide displays
+
+Layouts should adapt fluidly without horizontal scrolling.
+
+---
+
+# Accessibility
+
+Follow WCAG best practices.
+
+Requirements:
+
+* Keyboard navigation
+* Visible focus states
+* Semantic HTML
+* ARIA attributes where necessary
+* Screen reader compatibility
+* High color contrast
+* Accessible form labels
+
+---
+
+# Performance
+
+Prioritize speed and responsiveness.
+
+Requirements:
+
+* Optimized images from Cloudinary
+* Lazy loading
+* Code splitting
+* Server-side rendering where appropriate
+* Fast navigation
+* Minimal layout shift
+* Efficient database queries
+* Optimized bundle size
+
+---
+
+# Code Quality
+
+The UI must be built using reusable, maintainable components.
+
+Requirements:
+
+* No duplicated components
+* Consistent design tokens
+* Modular architecture
+* Reusable layouts
+* Shared UI primitives
+* Strong TypeScript typing
+* Clean file organization
+
+---
+
+# Design Standards
+
+The final product must:
+
+* Feel like a premium commercial SaaS product.
+* Avoid the appearance of an AI-generated template.
+* Avoid repetitive layouts and generic placeholder sections.
+* Maintain a consistent design language across every page.
+* Deliver a polished, production-ready experience from the first interaction.
+* Be visually distinctive while remaining familiar and intuitive for users searching for property.
