@@ -3,20 +3,34 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: House Hunting Kisii API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: properties
+    description: Property listings
+  - name: favorites
+    description: User favorites
+  - name: viewings
+    description: Viewing requests
+  - name: kyc
+    description: KYC verification
+  - name: testimonials
+    description: User testimonials
+  - name: locations
+    description: Popular locations
+  - name: dashboard
+    description: Dashboard statistics
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +38,374 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /properties:
+    get:
+      operationId: listProperties
+      tags: [properties]
+      summary: List properties with optional filters
+      parameters:
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [sale, rent, all]
+        - name: minPrice
+          in: query
+          schema:
+            type: number
+        - name: maxPrice
+          in: query
+          schema:
+            type: number
+        - name: bedrooms
+          in: query
+          schema:
+            type: integer
+        - name: location
+          in: query
+          schema:
+            type: string
+        - name: isFeatured
+          in: query
+          schema:
+            type: boolean
+        - name: propertyType
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            enum: [price_asc, price_desc, newest, oldest]
+      responses:
+        "200":
+          description: List of properties
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PropertyListResponse"
+    post:
+      operationId: createProperty
+      tags: [properties]
+      summary: Create a new property listing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PropertyInput"
+      responses:
+        "201":
+          description: Property created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Property"
+
+  /properties/featured:
+    get:
+      operationId: getFeaturedProperties
+      tags: [properties]
+      summary: Get featured properties
+      responses:
+        "200":
+          description: Featured properties
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Property"
+
+  /properties/recent:
+    get:
+      operationId: getRecentProperties
+      tags: [properties]
+      summary: Get recently added properties
+      responses:
+        "200":
+          description: Recent properties
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Property"
+
+  /properties/summary:
+    get:
+      operationId: getPropertySummary
+      tags: [properties]
+      summary: Get property market summary stats
+      responses:
+        "200":
+          description: Property summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PropertySummary"
+
+  /properties/{id}:
+    get:
+      operationId: getProperty
+      tags: [properties]
+      summary: Get a property by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Property details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PropertyDetail"
+        "404":
+          description: Not found
+    patch:
+      operationId: updateProperty
+      tags: [properties]
+      summary: Update a property
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PropertyUpdate"
+      responses:
+        "200":
+          description: Updated property
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Property"
+    delete:
+      operationId: deleteProperty
+      tags: [properties]
+      summary: Delete a property
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /favorites:
+    get:
+      operationId: listFavorites
+      tags: [favorites]
+      summary: List user favorites
+      responses:
+        "200":
+          description: Favorites list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Favorite"
+    post:
+      operationId: addFavorite
+      tags: [favorites]
+      summary: Add a property to favorites
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FavoriteInput"
+      responses:
+        "201":
+          description: Favorite added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Favorite"
+
+  /favorites/{propertyId}:
+    delete:
+      operationId: removeFavorite
+      tags: [favorites]
+      summary: Remove a property from favorites
+      parameters:
+        - name: propertyId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Removed
+
+  /viewings:
+    get:
+      operationId: listViewings
+      tags: [viewings]
+      summary: List viewing requests
+      responses:
+        "200":
+          description: Viewing requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ViewingRequest"
+    post:
+      operationId: createViewing
+      tags: [viewings]
+      summary: Request a property viewing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ViewingInput"
+      responses:
+        "201":
+          description: Viewing request created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ViewingRequest"
+
+  /viewings/{id}:
+    patch:
+      operationId: updateViewing
+      tags: [viewings]
+      summary: Update viewing request status
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ViewingUpdate"
+      responses:
+        "200":
+          description: Updated viewing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ViewingRequest"
+
+  /kyc:
+    get:
+      operationId: getKycStatus
+      tags: [kyc]
+      summary: Get current user KYC status
+      responses:
+        "200":
+          description: KYC status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KycVerification"
+    post:
+      operationId: submitKyc
+      tags: [kyc]
+      summary: Submit KYC verification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/KycInput"
+      responses:
+        "201":
+          description: KYC submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KycVerification"
+
+  /testimonials:
+    get:
+      operationId: listTestimonials
+      tags: [testimonials]
+      summary: List approved testimonials
+      responses:
+        "200":
+          description: Testimonials
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Testimonial"
+    post:
+      operationId: createTestimonial
+      tags: [testimonials]
+      summary: Submit a testimonial
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestimonialInput"
+      responses:
+        "201":
+          description: Testimonial submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Testimonial"
+
+  /locations:
+    get:
+      operationId: listLocations
+      tags: [locations]
+      summary: List popular locations in Kisii
+      responses:
+        "200":
+          description: Locations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Location"
+
+  /dashboard/stats:
+    get:
+      operationId: getDashboardStats
+      tags: [dashboard]
+      summary: Get dashboard statistics for landlord/seller
+      responses:
+        "200":
+          description: Dashboard stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardStats"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +416,379 @@ components:
       required:
         - status
 
+    Property:
+      type: object
+      required: [id, title, price, pricePeriod, listingType, propertyType, status, location, neighborhood, bedrooms, bathrooms, createdAt, images, isVerified, isFeatured]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: ["string", "null"]
+        price:
+          type: number
+        pricePeriod:
+          type: string
+          enum: [per_month, per_year, total]
+        listingType:
+          type: string
+          enum: [sale, rent]
+        propertyType:
+          type: string
+        status:
+          type: string
+          enum: [active, pending, sold, rented, inactive]
+        location:
+          type: string
+        neighborhood:
+          type: string
+        area:
+          type: ["number", "null"]
+        bedrooms:
+          type: integer
+        bathrooms:
+          type: integer
+        isVerified:
+          type: boolean
+        isFeatured:
+          type: boolean
+        images:
+          type: array
+          items:
+            $ref: "#/components/schemas/PropertyImage"
+        sellerName:
+          type: ["string", "null"]
+        sellerPhone:
+          type: ["string", "null"]
+        sellerEmail:
+          type: ["string", "null"]
+        sellerWhatsapp:
+          type: ["string", "null"]
+        amenities:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+
+    PropertyDetail:
+      allOf:
+        - $ref: "#/components/schemas/Property"
+        - type: object
+          properties:
+            latitude:
+              type: ["number", "null"]
+            longitude:
+              type: ["number", "null"]
+            viewCount:
+              type: integer
+
+    PropertyListResponse:
+      type: object
+      required: [properties, total, page, limit]
+      properties:
+        properties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Property"
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+
+    PropertySummary:
+      type: object
+      required: [totalListings, forSale, forRent, featured, verifiedListings, averageSalePrice, averageRentPrice]
+      properties:
+        totalListings:
+          type: integer
+        forSale:
+          type: integer
+        forRent:
+          type: integer
+        featured:
+          type: integer
+        verifiedListings:
+          type: integer
+        averageSalePrice:
+          type: number
+        averageRentPrice:
+          type: number
+
+    PropertyInput:
+      type: object
+      required: [title, price, pricePeriod, listingType, propertyType, location, neighborhood, bedrooms, bathrooms]
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        pricePeriod:
+          type: string
+          enum: [per_month, per_year, total]
+        listingType:
+          type: string
+          enum: [sale, rent]
+        propertyType:
+          type: string
+        location:
+          type: string
+        neighborhood:
+          type: string
+        area:
+          type: number
+        bedrooms:
+          type: integer
+        bathrooms:
+          type: integer
+        sellerPhone:
+          type: string
+        sellerEmail:
+          type: string
+        sellerWhatsapp:
+          type: string
+        amenities:
+          type: array
+          items:
+            type: string
+        images:
+          type: array
+          items:
+            type: string
+        isFeatured:
+          type: boolean
+        latitude:
+          type: number
+        longitude:
+          type: number
+
+    PropertyUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        pricePeriod:
+          type: string
+        propertyType:
+          type: string
+        location:
+          type: string
+        neighborhood:
+          type: string
+        area:
+          type: number
+        bedrooms:
+          type: integer
+        bathrooms:
+          type: integer
+        status:
+          type: string
+        isFeatured:
+          type: boolean
+        amenities:
+          type: array
+          items:
+            type: string
+
+    PropertyImage:
+      type: object
+      required: [id, url, isPrimary]
+      properties:
+        id:
+          type: integer
+        url:
+          type: string
+        isPrimary:
+          type: boolean
+
+    Favorite:
+      type: object
+      required: [id, propertyId, createdAt, property]
+      properties:
+        id:
+          type: integer
+        propertyId:
+          type: integer
+        createdAt:
+          type: string
+        property:
+          $ref: "#/components/schemas/Property"
+
+    FavoriteInput:
+      type: object
+      required: [propertyId]
+      properties:
+        propertyId:
+          type: integer
+
+    ViewingRequest:
+      type: object
+      required: [id, propertyId, scheduledAt, status, createdAt]
+      properties:
+        id:
+          type: integer
+        propertyId:
+          type: integer
+        scheduledAt:
+          type: string
+        status:
+          type: string
+          enum: [pending, confirmed, cancelled, completed]
+        message:
+          type: ["string", "null"]
+        requesterName:
+          type: ["string", "null"]
+        requesterEmail:
+          type: ["string", "null"]
+        requesterPhone:
+          type: ["string", "null"]
+        property:
+          $ref: "#/components/schemas/Property"
+        createdAt:
+          type: string
+
+    ViewingInput:
+      type: object
+      required: [propertyId, scheduledAt, requesterName, requesterEmail, requesterPhone]
+      properties:
+        propertyId:
+          type: integer
+        scheduledAt:
+          type: string
+        message:
+          type: string
+        requesterName:
+          type: string
+        requesterEmail:
+          type: string
+        requesterPhone:
+          type: string
+
+    ViewingUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [pending, confirmed, cancelled, completed]
+        scheduledAt:
+          type: string
+
+    KycVerification:
+      type: object
+      required: [id, status, createdAt]
+      properties:
+        id:
+          type: integer
+        status:
+          type: string
+          enum: [pending, approved, rejected, suspended]
+        idType:
+          type: ["string", "null"]
+        idNumber:
+          type: ["string", "null"]
+        address:
+          type: ["string", "null"]
+        rejectionReason:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+
+    KycInput:
+      type: object
+      required: [idType, idNumber, address]
+      properties:
+        idType:
+          type: string
+          enum: [national_id, passport]
+        idNumber:
+          type: string
+        address:
+          type: string
+        selfieUrl:
+          type: string
+
+    Testimonial:
+      type: object
+      required: [id, content, rating, authorName, createdAt]
+      properties:
+        id:
+          type: integer
+        content:
+          type: string
+        rating:
+          type: integer
+        authorName:
+          type: string
+        authorRole:
+          type: ["string", "null"]
+        avatarUrl:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    TestimonialInput:
+      type: object
+      required: [content, rating]
+      properties:
+        content:
+          type: string
+        rating:
+          type: integer
+
+    Location:
+      type: object
+      required: [id, name, propertyCount, imageUrl]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        propertyCount:
+          type: integer
+        imageUrl:
+          type: string
+        description:
+          type: ["string", "null"]
+
+    DashboardStats:
+      type: object
+      required: [totalProperties, activeListings, pendingListings, totalViews, totalFavorites, totalViewings, pendingViewings, monthlyViews]
+      properties:
+        totalProperties:
+          type: integer
+        activeListings:
+          type: integer
+        pendingListings:
+          type: integer
+        totalViews:
+          type: integer
+        totalFavorites:
+          type: integer
+        totalViewings:
+          type: integer
+        pendingViewings:
+          type: integer
+        monthlyViews:
+          type: array
+          items:
+            $ref: "#/components/schemas/MonthlyViewStat"
+
+    MonthlyViewStat:
+      type: object
+      required: [month, views]
+      properties:
+        month:
+          type: string
+        views:
+          type: integer
